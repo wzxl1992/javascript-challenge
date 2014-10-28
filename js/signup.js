@@ -54,11 +54,11 @@ function onSubmit(evt) {
     try {
         //calculate the age and test the age
         calculateAge(dob);
-        displayError("");
+        hideMessage();
     }
 
     catch(exception){
-        displayError("You must be older than 13");
+        displayError(exception);
         //evt.returnValue = false;
     }
 
@@ -95,7 +95,7 @@ function calculateAge(dob) {
     }
 
     if (yearsDiff < 13) {
-        throw new Error();
+        throw new Error("You must be older than 13");
     }
     //return moment().diff(dob, 'years');
 }
@@ -118,6 +118,13 @@ function displayMessage(message, isError) {
     msgElem.innerHTML = message;
     msgElem.className = isError ? 'alert alert-danger' : 'alert alert-success';
     msgElem.style.display = 'block';
+}
+
+function hideMessage(message, isError) {
+    var msgElem = document.getElementById('birthdateMessage');
+    msgElem.innerHTML = message;
+    msgElem.className = isError ? 'alert alert-danger' : 'alert alert-success';
+    msgElem.style.display = 'none';
 }
 
 /* validateForm()
