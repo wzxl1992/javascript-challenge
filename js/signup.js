@@ -59,7 +59,7 @@ function onSubmit(evt) {
 
     catch(exception){
         displayError(exception);
-        //evt.returnValue = false;
+        evt.returnValue = false;
     }
 
     try {
@@ -68,8 +68,10 @@ function onSubmit(evt) {
 
     catch(exception) {
         alert("zip code can be only 5 digits number");
-        //evt.returnValue = false;
+        evt.returnValue = false;
     }
+
+    //evt.returnValue = validateForm(this);
 
     if (!evt.returnValue && evt.preventDefault) {
         evt.preventDefault();
@@ -134,11 +136,17 @@ function hideMessage(message, isError) {
 *   form    reference to the form that needs to be validated
 * */
 function validateForm(form) {
-    var requiredFields = ['firstName', 'lastName', 'address1', 'city', 'state', 'zip', 'birthdate','occupationOther'];
+    var requiredFields = ['firstName', 'lastName', 'address1', 'city', 'state', 'zip', 'birthdate'];
     var idx;
     var formValid = true;
+    //var occupationOther = 'occupationOther';
     for (idx = 0; idx < requiredFields.length; idx++) {
         formValid &= validateRequiredField(form.elements[requiredFields[idx]]);
+    }
+    var personForm = document.getElementById('signup');
+    var occupationForOther = personForm.elements['occupation'].value;
+    if ( 'other' == occupationForOther) {
+        formValid &= validateRequiredField(form.elements['occupationOther']);
     }
     return formValid;
 }
